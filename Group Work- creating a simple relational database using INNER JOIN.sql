@@ -97,9 +97,38 @@ WHERE customer_id >= 6;
 SELECT * FROM orders
 WHERE magazine_code = 2 OR magazine_code = 3;
 
--- Practice Inner Join --
+-- Inner Join --
+
+SELECT *
+FROM orders
+JOIN customers c ON c.customer_id = orders.customer_id
+JOIN magazines m ON m.magazine_code = orders.magazine_code;
+
+-- Inner Join with four fields I want --
 
 SELECT c.customer_id, c.surname, m.magazine_code, m.magazine_title
 FROM orders
 JOIN customers c ON c.customer_id = orders.customer_id
 JOIN magazines m ON m.magazine_code = orders.magazine_code;
+
+/* Inner Join with WHERE condition
+'_' represents one character. '%' represents any number of characters
+Below I want customers who have the letter 'a' as the 2nd character in their surname*/
+SELECT c.customer_id, c.surname, m.magazine_code, m.magazine_title
+FROM orders
+JOIN customers c ON c.customer_id = orders.customer_id
+JOIN magazines m ON m.magazine_code = orders.magazine_code
+WHERE c.surname LIKE '_a%';
+
+-- How many different magazines do we have? Distinct count of magazine titles (regardless how many times it appears in the dataset) --
+SELECT COUNT(DISTINCT m.magazine_title)
+FROM orders
+JOIN customers c ON c.customer_id = orders.customer_id
+JOIN magazines m ON m.magazine_code = orders.magazine_code;
+
+-- I want all information from the orders table in revers alphabetical order --
+SELECT *
+FROM orders
+JOIN customers c ON c.customer_id = orders.customer_id
+JOIN magazines m ON m.magazine_code = orders.magazine_code
+ORDER BY surname DESC;
